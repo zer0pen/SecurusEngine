@@ -1,4 +1,4 @@
-#version 420 core                               
+#version 330 core                               
                   
 uniform sampler2D s;
 
@@ -6,10 +6,10 @@ out vec4 color;
 
 in VS_OUT
 {
-	vec2 tc;
+	vec2 uv;
 }fs_in;
                                      
 void main(void)                      
 {                                    
-    color = texture(s, fs_in.tc);
+    color = texture(s, fs_in.uv);
 }  

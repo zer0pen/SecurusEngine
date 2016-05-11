@@ -2,6 +2,10 @@
 #include <gl3w.h>
 #include <glfw3.h>
 #include <FreeImage.h>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+
+using namespace std;
 
 void Init();
 void LoadTexture(char* path);
@@ -9,6 +13,7 @@ GLuint LoadShader(const char * filename, GLenum shader_type, bool check_errors);
 void Render();
 
 GLuint image, program, vao, fs, vs;
+GLint mv_location, proj_location;
 
 int main(void)
 {
@@ -19,7 +24,7 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -63,68 +68,83 @@ void Init()
 
 	glLinkProgram(program);
 
+	//mv_location = glGetUniformLocation(program, "mv_matrix");
+	//proj_location = glGetUniformLocation(program, "proj_matrix");
+	//
+
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
 	const GLfloat data[] = {
+		 1.0,  1.0, 1.0, 1.0,
+		-1.0,  1.0, 1.0, 1.0,
+		-1.0, -1.0, 1.0, 1.0,
+
 		-1.0, -1.0, 1.0, 1.0,
 		 1.0, -1.0, 1.0, 1.0,
-		-1.0,  1.0, 1.0, 1.0,
-		 1.0,  1.0, 1.0, 1.0
+		 1.0,  1.0, 1.0, 1.0,
+	};
+	const GLfloat data2[] =
+	{
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f,
+
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f
 	};
 
-	GLuint buffer;
+	GLuint buffer, buffer2;
 	glGenBuffers(1, &buffer);
+	glGenBuffers(1, &buffer2);
+
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferData(GL_ARRAY_BUFFER,sizeof(data),data,GL_STATIC_DRAW);
-	glVertexAttribPointer(0,4,GL_FLOAT,GL_FALSE,0,nullptr);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0,4,GL_FLOAT,GL_FALSE,0,nullptr);
 
+	glBindBuffer(GL_ARRAY_BUFFER, buffer2);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(data2), data2, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+	//LoadTexture("./image/a.jpg");
 	LoadTexture("./image/asdf.png");
 }
 
 void Render()
 {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 	static const GLfloat green[] = { 0.0f, 0.25f, 0.0f, 1.0f };
 	glClearBufferfv(GL_COLOR, 0, green);
 	glUseProgram(program);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
-void LoadTexture(char* path)
+void LoadTexture(char* fileName)
 {
 	GLuint texture;
-	char* fileName =  path;
 
 	FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(fileName);
-	FIBITMAP* temp = FreeImage_Load(formato, fileName);
+	FIBITMAP* image = FreeImage_Load(formato, fileName);
+	
 
-	FIBITMAP* image = FreeImage_ConvertTo32Bits(temp);
-	FreeImage_Unload(temp);
+	if (FreeImage_GetBPP(image) != 32)
+		image = FreeImage_ConvertTo32Bits(image);
 
 	int width = FreeImage_GetWidth(image);
 	int height = FreeImage_GetHeight(image);
-
-	GLubyte* a = new GLubyte[4 * width*height];
-	char* pixeles = (char*)FreeImage_GetBits(image);
-
-
-	for (int j = 0; j<width*height; j++)
-	{
-		a[j * 4 + 0] = pixeles[j * 4 + 2];
-		a[j * 4 + 1] = pixeles[j * 4 + 1];
-		a[j * 4 + 2] = pixeles[j * 4 + 0];
-		a[j * 4 + 3] = pixeles[j * 4 + 3];
-	}
-
-	//FreeImage loads in BGR format, so you need to swap some bytes(Or use GL_BGR).
-
-	//Now generate the OpenGL texture object 
+ 
 	glGenTextures(1,&texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, a);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, FreeImage_GetBits(image));
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
 
 	GLenum huboError = glGetError();
 	if(huboError){
@@ -132,8 +152,6 @@ void LoadTexture(char* path)
 	}
 	FreeImage_Unload(image);
 }
-
-
 
 GLuint LoadShader(const char * filename, GLenum shader_type, bool check_errors)
 {
