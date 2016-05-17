@@ -4,7 +4,9 @@
 
 Application::Application()
 {
-	
+	window = new Window();
+	shader = new Shader();
+	camera = new Camera();
 }
 
 Application::~Application()
@@ -13,13 +15,28 @@ Application::~Application()
 
 void Application::Init()
 {
+	if (!glfwInit())
+	{
+		printf("aaa");
+	}
 
+	if (!gl3wInit()) 
+	{
+		printf("AAAAAA");
+	}
+	window->Init();
+	shader->Init();
 }
 
 void Application::Update()
 {
-	PhysicsUpdate();
-	GraphicUpdate();
+	while (!window->windowShouldClose()) 
+	{
+		PhysicsUpdate();
+		GraphicUpdate();
+		window->swapBuffers();
+		window->pollEvents();
+	}
 }
 
 void Application::PhysicsUpdate() 
@@ -35,10 +52,10 @@ void Application::GraphicUpdate()
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glUseProgram(program);
+	glUseProgram(shader -> GetProgram());
 
-	GLint pLocation = glGetUniformLocation(program, "p");
-	glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(myCamera->getCameraMatrix()[0][0]));
+	GLint pLocation = glGetUniformLocation(shader -> GetProgram(), "p");
+	glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(camera->getCameraMatrix()[0][0]));
 	currentScene->GraphicUpdate();
 }
 

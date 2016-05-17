@@ -2,18 +2,22 @@
 
 Window::Window()
 {
-	if (!glfwInit())
-	{
-		printf("window create fail1\n");
-		return;
-	}
-
-	window = glfwCreateWindow(1280, 720, "GameApplication", nullptr, nullptr);
 	
-	if(!window)
+}
+
+Window::~Window()
+{
+	glfwTerminate();
+}
+
+void Window::Init()
+{
+	window = glfwCreateWindow(1280, 720, "GameApplication", nullptr, nullptr);
+
+	if (!window)
 	{
 		glfwTerminate();
-		printf("window create fail2\n");
+		printf("window create fail\n");
 		return;
 	}
 
@@ -24,22 +28,22 @@ Window::Window()
 	screenHeight = 720;
 }
 
-Window::Window(int width, int height, char* title, GLFWmonitor* monitor, GLFWwindow* share)
+void Window::Init(int width, int height, char* title, GLFWmonitor* monitor, GLFWwindow* share)
 {
-	if (glfwInit())
+	window = glfwCreateWindow(width, height, title, monitor, share);
+
+	if (!window)
 	{
-		printf("window create fail\n");
+		glfwTerminate();
+		printf("window create fail2\n");
 		return;
 	}
 
-	window = glfwCreateWindow(width, height, title, monitor, share);
+	//glfwSetWindowSizeCallback(window, windowSizeCallback);
+	glfwMakeContextCurrent(window);
+
 	screenWidth = width;
 	screenHeight = height;
-}
-
-Window::~Window()
-{
-	glfwTerminate();
 }
 
 int Window::getScreenWidth() 

@@ -1,5 +1,6 @@
 #pragma once
 #include <gl3w.h>
+#include <glfw3.h>
 #include "Object.h"
 #include "Window.h"
 #include "Camera.h"
@@ -20,7 +21,8 @@ public:
 
 private:
 	Window *window;
-	Shader *shaer;
+	Shader *shader;
 	Scene  *currentScene;
+	Camera *camera;
 };
 

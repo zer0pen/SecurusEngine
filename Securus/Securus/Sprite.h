@@ -1,5 +1,5 @@
 #pragma once
-#include "Object.h"''
+#include "Object.h"
 #include <gl3w.h>
 
 class Sprite : public Object

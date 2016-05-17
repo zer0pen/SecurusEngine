@@ -1,5 +1,4 @@
 #include "Sprite.h"
-#include <stdio.h>
 #include <FreeImage.h>
 #include <gl3w.h>
 
@@ -34,23 +33,40 @@ Sprite::Sprite(float x, float y, char* filePath)
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesData), verticesData, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
 	glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(uvData), uvData, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
 Sprite::~Sprite()
 {
+	glDeleteBuffers(1, &vertexBuffer);
+	glDeleteBuffers(1, &uvBuffer);
+	glDeleteTextures(1, &textureID);
+}
+
+void Sprite::PhysicsUpdate()
+{
 
 }
 
-void Sprite::Render()
+void Sprite::GraphicUpdate()
 {
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+	glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 }
 
 
@@ -74,7 +90,7 @@ void Sprite::LoadTexture(char* fileName)
 
 	GLenum huboError = glGetError();
 	if (huboError) {
-		printf("There was an error loading the texture\n");
+		//printf("There was an error loading the texture\n");
 	}
 	FreeImage_Unload(image);
 }
