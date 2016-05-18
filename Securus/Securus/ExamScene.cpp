@@ -1,4 +1,4 @@
-#include "ExamScene.h"
+#include "stdafx.h"
 
 ExamScene::ExamScene()
 {
@@ -11,7 +11,6 @@ ExamScene::~ExamScene()
 
 void ExamScene::PhysicsUpdate()
 {
-
 }
 
 void ExamScene::GraphicUpdate()

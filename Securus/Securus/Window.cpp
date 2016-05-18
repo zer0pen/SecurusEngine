@@ -1,8 +1,7 @@
-#include "Window.h"
+#include "stdafx.h"
 
 Window::Window()
 {
-	
 }
 
 Window::~Window()
@@ -24,7 +23,7 @@ void Window::Init()
 	//glfwSetWindowSizeCallback(window, windowSizeCallback);
 	glfwMakeContextCurrent(window);
 
-	if (gl3wInit()) 
+	if (gl3wInit())
 	{
 		printf("gl3wfail\n");
 	}
@@ -47,7 +46,7 @@ void Window::Init(int width, int height, char* title, GLFWmonitor* monitor, GLFW
 	//glfwSetWindowSizeCallback(window, windowSizeCallback);
 	glfwMakeContextCurrent(window);
 
-	if (gl3wInit()) 
+	if (gl3wInit())
 	{
 		printf("gl3wfail\n");
 	}
@@ -56,12 +55,12 @@ void Window::Init(int width, int height, char* title, GLFWmonitor* monitor, GLFW
 	screenHeight = height;
 }
 
-int Window::getScreenWidth() 
+int Window::getScreenWidth()
 {
 	return screenWidth;
 }
 
-int Window::getScreenHeight() 
+int Window::getScreenHeight()
 {
 	return screenHeight;
 }

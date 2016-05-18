@@ -28,6 +28,9 @@
     <Filter Include="Resource Files\Shader">
       <UniqueIdentifier>{b72bc2c7-9423-438d-b691-a897bfeec9aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Precompiled Header">
+      <UniqueIdentifier>{0ee4a2d0-7ac5-44fe-8fdd-d7df48d083c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="shader\vs.txt">
@@ -65,6 +68,9 @@
     <ClCompile Include="ExamScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Precompiled Header</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -93,6 +99,9 @@
     </ClInclude>
     <ClInclude Include="ExamScene.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Precompiled Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

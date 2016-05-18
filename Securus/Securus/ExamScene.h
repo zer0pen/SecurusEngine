@@ -1,6 +1,4 @@
 #pragma once
-#include "Scene.h"
-#include "Sprite.h"
 
 class ExamScene : public Scene
 {
@@ -14,4 +12,3 @@ public:
 private:
 	Sprite *sprite;
 };
-

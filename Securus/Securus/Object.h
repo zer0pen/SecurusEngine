@@ -8,4 +8,3 @@ public:
 	virtual void GraphicUpdate() = 0;
 	virtual void PhysicsUpdate() = 0;
 };
-

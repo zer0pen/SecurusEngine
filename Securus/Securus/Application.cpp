@@ -1,4 +1,4 @@
-#include "Application.h"
+#include "stdafx.h"
 
 Application::Application()
 {
@@ -24,7 +24,7 @@ void Application::Init()
 
 void Application::Update()
 {
-	while (!window->windowShouldClose()) 
+	while (!window->windowShouldClose())
 	{
 		PhysicsUpdate();
 		GraphicUpdate();
@@ -33,7 +33,7 @@ void Application::Update()
 	}
 }
 
-void Application::PhysicsUpdate() 
+void Application::PhysicsUpdate()
 {
 	currentScene->PhysicsUpdate();
 }

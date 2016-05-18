@@ -1,13 +1,11 @@
-#include "Shader.h"
+#include "stdafx.h"
 
 Shader::Shader()
 {
-	
 }
 
 Shader::~Shader()
 {
-
 }
 
 GLuint Shader::GetProgram()

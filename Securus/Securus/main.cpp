@@ -1,5 +1,5 @@
-#include "Application.h"
-#include "ExamScene.h"
+#include "stdafx.h"
+
 int main(void)
 {
 	Application *myApp = new Application();

@@ -1,6 +1,4 @@
 #pragma once
-#include <gl3w.h>
-#include <stdio.h>
 
 class Shader
 {
@@ -13,4 +11,3 @@ public:
 private:
 	GLuint program, fs, vs, vao;
 };
-

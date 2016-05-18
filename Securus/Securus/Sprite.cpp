@@ -1,7 +1,4 @@
-#include "Sprite.h"
-#include <FreeImage.h>
-#include <gl3w.h>
-
+#include "stdafx.h"
 
 Sprite::Sprite(float x, float y, char* filePath)
 {
@@ -9,16 +6,12 @@ Sprite::Sprite(float x, float y, char* filePath)
 
 	//first
 	verticesData[0] = x + width;		verticesData[1] = y + height;
-
 	verticesData[2] = x;			verticesData[3] = y + height;
-
 	verticesData[4] = x;			verticesData[5] = y;
 
 	//second
 	verticesData[6] = x;			verticesData[7] = y;
-
 	verticesData[8] = x + width;		verticesData[9] = y;
-	
 	verticesData[10] = x + width;	verticesData[11] = y + height;
 
 	uvData[0]  = 1.0f;	uvData[1]  = 1.0f;
@@ -47,7 +40,6 @@ Sprite::~Sprite()
 
 void Sprite::PhysicsUpdate()
 {
-
 }
 
 void Sprite::GraphicUpdate()
@@ -75,7 +67,6 @@ void Sprite::LoadTexture(char* fileName)
 	FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(fileName);
 	FIBITMAP* image = FreeImage_Load(formato, fileName);
 
-
 	if (FreeImage_GetBPP(image) != 32)
 		image = FreeImage_ConvertTo32Bits(image);
 
@@ -89,7 +80,8 @@ void Sprite::LoadTexture(char* fileName)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	GLenum huboError = glGetError();
-	if (huboError) {
+	if (huboError)
+	{
 		//printf("There was an error loading the texture\n");
 	}
 	FreeImage_Unload(image);

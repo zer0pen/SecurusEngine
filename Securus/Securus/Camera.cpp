@@ -1,4 +1,4 @@
-#include "Camera.h"
+#include "stdafx.h"
 
 Camera::Camera()
 {
@@ -21,7 +21,7 @@ void Camera::translateCamera(glm::vec3 position)
 	cameraMatrix = glm::translate(cameraMatrix, position);
 }
 
-glm::mat4 Camera::getCameraMatrix() 
+glm::mat4 Camera::getCameraMatrix()
 {
 	return cameraMatrix;
 }

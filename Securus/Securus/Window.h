@@ -1,7 +1,4 @@
 #pragma once
-#include <gl3w.h>
-#include <glfw3.h>
-#include <stdio.h>
 
 class Window
 {
@@ -26,4 +23,3 @@ private:
 	GLFWwindow* window;
 	int screenWidth, screenHeight;
 };
-

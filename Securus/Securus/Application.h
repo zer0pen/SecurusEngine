@@ -1,11 +1,4 @@
 #pragma once
-#include <gl3w.h>
-#include <glfw3.h>
-#include "Object.h"
-#include "Window.h"
-#include "Camera.h"
-#include "Scene.h"
-#include "Shader.h"
 
 class Application : public Object
 {
@@ -25,4 +18,3 @@ private:
 	Scene  *currentScene;
 	Camera *camera;
 };
-
