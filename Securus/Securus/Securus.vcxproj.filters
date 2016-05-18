@@ -62,6 +62,9 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\Frame</Filter>
     </ClCompile>
+    <ClCompile Include="ExamScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -87,6 +90,9 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Source Files\Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="ExamScene.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

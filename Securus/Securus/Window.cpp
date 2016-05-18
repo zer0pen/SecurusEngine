@@ -24,6 +24,11 @@ void Window::Init()
 	//glfwSetWindowSizeCallback(window, windowSizeCallback);
 	glfwMakeContextCurrent(window);
 
+	if (gl3wInit()) 
+	{
+		printf("gl3wfail\n");
+	}
+
 	screenWidth = 1280;
 	screenHeight = 720;
 }
@@ -35,12 +40,17 @@ void Window::Init(int width, int height, char* title, GLFWmonitor* monitor, GLFW
 	if (!window)
 	{
 		glfwTerminate();
-		printf("window create fail2\n");
+		printf("window create fail\n");
 		return;
 	}
 
 	//glfwSetWindowSizeCallback(window, windowSizeCallback);
 	glfwMakeContextCurrent(window);
+
+	if (gl3wInit()) 
+	{
+		printf("gl3wfail\n");
+	}
 
 	screenWidth = width;
 	screenHeight = height;

@@ -1,12 +1,11 @@
 #include "Application.h"
 
-#define SAFE_DELETE(p) if(p) delete p;
-
 Application::Application()
 {
 	window = new Window();
 	shader = new Shader();
 	camera = new Camera();
+	currentScene = nullptr;
 }
 
 Application::~Application()
@@ -17,12 +16,7 @@ void Application::Init()
 {
 	if (!glfwInit())
 	{
-		printf("aaa");
-	}
-
-	if (!gl3wInit()) 
-	{
-		printf("AAAAAA");
+		printf("glfw fail\n");
 	}
 	window->Init();
 	shader->Init();
@@ -61,6 +55,8 @@ void Application::GraphicUpdate()
 
 void Application::ChangeScene(Scene *nextScene)
 {
-	SAFE_DELETE(currentScene);
+	if(currentScene != nullptr)
+		delete currentScene;
+
 	currentScene = nextScene;
 }
