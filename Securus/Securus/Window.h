@@ -16,10 +16,7 @@ public:
 	void Init();
 	void Init(int width, int height, char* title, GLFWmonitor* monitor = nullptr, GLFWwindow* share = nullptr);
 
-protected:
-	virtual void windowSizeCallback(GLFWwindow* window, int width, int height);
-
 private:
-	GLFWwindow* window;
+	GLFWwindow* glfwWindow;
 	int screenWidth, screenHeight;
 };

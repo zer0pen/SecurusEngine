@@ -1,6 +1,6 @@
 #pragma once
 
-class Sprite : public Object
+class Sprite : public Component
 {
 public:
 	Sprite(float x, float y, char* filePath);

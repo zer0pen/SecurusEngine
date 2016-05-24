@@ -82,7 +82,7 @@ void Sprite::LoadTexture(char* fileName)
 	GLenum huboError = glGetError();
 	if (huboError)
 	{
-		//printf("There was an error loading the texture\n");
+		printf("There was an error loading the texture\n");
 	}
 	FreeImage_Unload(image);
 }

@@ -11,17 +11,16 @@ Window::~Window()
 
 void Window::Init()
 {
-	window = glfwCreateWindow(1280, 720, "GameApplication", nullptr, nullptr);
+	glfwWindow = glfwCreateWindow(1280, 720, "GameApplication", nullptr, nullptr);
 
-	if (!window)
+	if (!glfwWindow)
 	{
 		glfwTerminate();
 		printf("window create fail\n");
 		return;
 	}
 
-	//glfwSetWindowSizeCallback(window, windowSizeCallback);
-	glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(glfwWindow);
 
 	if (gl3wInit())
 	{
@@ -34,17 +33,16 @@ void Window::Init()
 
 void Window::Init(int width, int height, char* title, GLFWmonitor* monitor, GLFWwindow* share)
 {
-	window = glfwCreateWindow(width, height, title, monitor, share);
+	glfwWindow = glfwCreateWindow(width, height, title, monitor, share);
 
-	if (!window)
+	if (!glfwWindow)
 	{
 		glfwTerminate();
 		printf("window create fail\n");
 		return;
 	}
 
-	//glfwSetWindowSizeCallback(window, windowSizeCallback);
-	glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(glfwWindow);
 
 	if (gl3wInit())
 	{
@@ -67,7 +65,7 @@ int Window::getScreenHeight()
 
 int Window::windowShouldClose()
 {
-	return glfwWindowShouldClose(window);
+	return glfwWindowShouldClose(glfwWindow);
 }
 
 void Window::pollEvents()
@@ -77,9 +75,10 @@ void Window::pollEvents()
 
 void Window::swapBuffers()
 {
-	glfwSwapBuffers(window);
+	glfwSwapBuffers(glfwWindow);
 }
 
+/*
 void Window::windowSizeCallback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
@@ -87,3 +86,5 @@ void Window::windowSizeCallback(GLFWwindow* window, int width, int height)
 	screenWidth	 = width;
 	screenHeight = height;
 }
+*/
+
